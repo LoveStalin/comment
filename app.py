@@ -3,7 +3,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app)  # Cho phép truy cập từ bất kỳ domain nào (Vercel, Netlify...)
+CORS(app, resources={r"/*": {"origins": "https://happybirthdayphuonganhiloveu.netlify.app"}})
 
 # Kết nối MongoDB local hoặc MongoDB Atlas
 client = MongoClient("mongodb+srv://nguyenxuanthanh1112010:<db_password>@cluster0.4jpjums.mongodb.net/comment_db?retryWrites=true&w=majority&appName=Cluster0")
