@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)  # Cho phép truy cập từ bất kỳ domain nào (Vercel, Netlify...)
 
 # Kết nối MongoDB local hoặc MongoDB Atlas
-client = MongoClient("mongodb://localhost:27017/")  # Thay bằng URI MongoDB Atlas nếu deploy
+client = MongoClient("mongodb+srv://nguyenxuanthanh1112010:<db_password>@cluster0.4jpjums.mongodb.net/comment_db?retryWrites=true&w=majority&appName=Cluster0")
 db = client["comment_db"]
 collection = db["comments"]
 
