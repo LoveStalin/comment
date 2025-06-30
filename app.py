@@ -3,10 +3,10 @@ from flask_cors import CORS
 from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://happybirthdayphuonganhiloveu.netlify.app"}})
+CORS(app, resources={r"/*": {"origins": "https://happybirthdayphuonganhiloveu.netlify.app"}}, supports_credentials=True)
 
 # Kết nối MongoDB local hoặc MongoDB Atlas
-client = MongoClient("mongodb+srv://nguyenxuanthanh1112010:<db_password>@cluster0.4jpjums.mongodb.net/comment_db?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient("mongodb+srv://nguyenxuanthanh1112010:<jdjJGZUxMhxtuTY8>@cluster0.4jpjums.mongodb.net/comment_db?retryWrites=true&w=majority&appName=Cluster0")
 db = client["comment_db"]
 collection = db["comments"]
 
