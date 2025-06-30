@@ -3,7 +3,8 @@ from flask_cors import CORS
 from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://happybirthdayphuonganhiloveu.netlify.app"}}, supports_credentials=True)
+# Cho phép CORS toàn cục, hỗ trợ cả preflight OPTIONS
+CORS(app, origins="https://happybirthdayphuonganhiloveu.netlify.app", supports_credentials=True)
 
 # Kết nối MongoDB Atlas
 client = MongoClient("mongodb+srv://nguyenxuanthanh1112010:jdjJGZUxMhxtuTY8@cluster0.4jpjums.mongodb.net/comment_db?retryWrites=true&w=majority&appName=Cluster0")
@@ -40,8 +41,12 @@ def post_comment():
     return jsonify({"status": "ok"}), 201
 
 # API gửi phản hồi
-@app.route("/comments/<int:index>/reply", methods=["POST"])
+@app.route("/comments/<int:index>/reply", methods=["POST", "OPTIONS"])
 def reply_comment(index):
+    if request.method == "OPTIONS":
+        # Phản hồi preflight
+        return '', 200
+
     data = request.get_json()
     reply = {
         "name": data.get("name", "Ẩn danh"),
@@ -51,6 +56,7 @@ def reply_comment(index):
     if not reply["message"]:
         return jsonify({"error": "Reply is empty!"}), 400
 
+    # Lấy tất cả comments (ẩn _id để dễ xử lý)
     comments = list(collection.find({}, {"_id": 0}))
 
     if index < 0 or index >= len(comments):
